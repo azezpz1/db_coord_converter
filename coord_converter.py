@@ -51,8 +51,9 @@ class db_converter:
             return
         row.pop(self.UTM_ZONE_ELEMENT) # removes unneeded element
         lat, lon = utm.to_latlon(east, north, zone, northern=True)
-        row[self.UTM_EAST_ELEMENT] = lat
-        row[self.UTM_NORTH_ELEMENT] = lon
+        #subtract one to compensate for removed element
+        row[self.UTM_EAST_ELEMENT-1] = lat 
+        row[self.UTM_NORTH_ELEMENT-1] = lon 
 
         self.conv_c.execute('''INSERT INTO tx_markers VALUES (?,?,?,?,?,?,?,?,
                             ?,?,?,?,?,?,?,?)''', row)
